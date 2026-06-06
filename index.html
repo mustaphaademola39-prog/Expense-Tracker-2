@@ -24,8 +24,10 @@
       <a href="#" data-page="add">➕ Add Expense</a>
       <a href="#" data-page="expenses">📋 All Expenses</a>
       <a href="#" data-page="summary">📈 Summary</a>
+      <a href="#" data-page="monthly">📅 Monthly Expenses</a>
+      <a href="#" data-page="yearly">📆 Yearly Expenses</a>
     </nav>
-    <div class="sidebar-section">
+    <div class="sidebar-section sidebar-budget-section">
       <div class="sidebar-section-title">Budget Progress</div>
       <div id="sidebarBudget" class="sidebar-budget">
         <span>₦0.00</span> of <span>₦0.00</span>
@@ -94,6 +96,20 @@
               <span id="metricHighest" class="metric-value">₦0.00</span>
             </div>
           </div>
+          <div class="dashboard-metrics dashboard-extras">
+            <div class="metric">
+              <span class="metric-label">This Month</span>
+              <span id="metricMonth" class="metric-value">₦0.00</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">This Year</span>
+              <span id="metricYear" class="metric-value">₦0.00</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Top Category</span>
+              <span id="metricTopCat" class="metric-value">—</span>
+            </div>
+          </div>
         </div>
         <div class="card">
           <div class="budget-row">
@@ -101,6 +117,35 @@
             <input type="text" id="budgetLimit" placeholder="₦0.00" autocomplete="off">
           </div>
           <div id="budgetWarning" class="budget-warning hidden">⚠ You have exceeded your budget limit!</div>
+        </div>
+        <div class="card">
+          <h2>Quick Add</h2>
+          <div class="quick-add">
+            <div class="quick-amount" id="quickAmount">₦0.00</div>
+            <div class="quick-buttons">
+              <button class="quick-btn" data-value="100">+100</button>
+              <button class="quick-btn" data-value="500">+500</button>
+              <button class="quick-btn" data-value="1000">+1k</button>
+              <button class="quick-btn" data-value="5000">+5k</button>
+              <button class="quick-btn" data-value="10000">+10k</button>
+              <button class="quick-btn subtract" data-value="-100">−100</button>
+              <button class="quick-btn subtract" data-value="-500">−500</button>
+              <button class="quick-btn subtract" data-value="-1000">−1k</button>
+            </div>
+            <div class="quick-row">
+              <input type="text" id="quickName" placeholder="Expense name" autocomplete="off">
+              <select id="quickCategory">
+                <option value="">Category</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Rent">Rent</option>
+                <option value="Data">Data</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Others">Others</option>
+              </select>
+              <button id="quickEnterBtn">Enter</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -139,6 +184,60 @@
           <h2>Category Summary</h2>
           <div id="categorySummary" class="summary-grid"></div>
         </div>
+        <div class="card">
+          <h2>Monthly Breakdown</h2>
+          <div id="monthlyBreakdown" class="breakdown-list"></div>
+        </div>
+        <div class="card">
+          <h2>Yearly Breakdown</h2>
+          <div id="yearlyBreakdown" class="breakdown-list"></div>
+        </div>
+      </div>
+
+      <div class="page hidden" id="page-monthly">
+        <h1>Bugexp</h1>
+        <div class="period-summary">
+          <div class="card period-card">
+            <span class="period-card-label">Total Spent</span>
+            <span id="monthlyTotal" class="period-card-value">₦0.00</span>
+          </div>
+          <div class="card period-card">
+            <span class="period-card-label">Transactions</span>
+            <span id="monthlyCount" class="period-card-value">0</span>
+          </div>
+          <div class="card period-card">
+            <span class="period-card-label">Highest</span>
+            <span id="monthlyHighest" class="period-card-value">₦0.00</span>
+          </div>
+        </div>
+        <div class="card period-nav">
+          <label for="monthSelect">Select Month:</label>
+          <select id="monthSelect"></select>
+        </div>
+        <div id="monthlyViewContent"></div>
+      </div>
+
+      <div class="page hidden" id="page-yearly">
+        <h1>Bugexp</h1>
+        <div class="period-summary">
+          <div class="card period-card">
+            <span class="period-card-label">Total Spent</span>
+            <span id="yearlyTotal" class="period-card-value">₦0.00</span>
+          </div>
+          <div class="card period-card">
+            <span class="period-card-label">Transactions</span>
+            <span id="yearlyCount" class="period-card-value">0</span>
+          </div>
+          <div class="card period-card">
+            <span class="period-card-label">Highest</span>
+            <span id="yearlyHighest" class="period-card-value">₦0.00</span>
+          </div>
+        </div>
+        <div class="card period-nav">
+          <label for="yearSelect">Select Year:</label>
+          <select id="yearSelect"></select>
+        </div>
+        <div id="yearlyViewContent"></div>
       </div>
     </div>
   </main>
