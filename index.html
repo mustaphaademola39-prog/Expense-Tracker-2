@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bugexp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu">☰</button>
+
+  <aside id="sidebar" class="sidebar">
+    <button id="closeSidebar" class="close-sidebar" aria-label="Close menu">✕</button>
+    <div class="sidebar-header">
+      <span class="sidebar-icon">💰</span>
+      <span class="sidebar-title">Bugexp</span>
+      <span class="sidebar-tagline">Track every kobo</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" data-page="dashboard" class="active">📊 Dashboard</a>
+      <a href="#" data-page="add">➕ Add Expense</a>
+      <a href="#" data-page="expenses">📋 All Expenses</a>
+      <a href="#" data-page="summary">📈 Summary</a>
+    </nav>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Budget Progress</div>
+      <div id="sidebarBudget" class="sidebar-budget">
+        <span>₦0.00</span> of <span>₦0.00</span>
+      </div>
+      <div class="progress-track">
+        <div id="progressFill" class="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Filters</div>
+      <div class="sidebar-filter-group">
+        <label for="filterCategory">Category</label>
+        <select id="filterCategory">
+          <option value="">All Categories</option>
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Rent">Rent</option>
+          <option value="Data">Data</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+      <div class="sidebar-filter-group">
+        <label>Date</label>
+        <div class="date-filters">
+          <button data-date="all" class="date-btn active">All</button>
+          <button data-date="today" class="date-btn">Today</button>
+          <button data-date="week" class="date-btn">This Week</button>
+          <button data-date="month" class="date-btn">This Month</button>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <button id="clearAllBtn" class="sidebar-clear-btn">🗑 Clear All Expenses</button>
+      <label class="sidebar-toggle-row">
+        <span>🌙 Dark Mode</span>
+        <input type="checkbox" id="darkModeToggle">
+        <span class="toggle-slider"></span>
+      </label>
+      <span id="aboutBtn" class="sidebar-about">About Bugexp</span>
+    </div>
+  </aside>
+
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <main id="mainContent" class="main-content">
+    <div class="container">
+      <div class="page" id="page-dashboard">
+        <h1>Bugexp</h1>
+        <div class="card dashboard-card">
+          <div class="dashboard-main">
+            <div class="total-label">Total Spent</div>
+            <div id="totalAmount" class="total-amount">₦0.00</div>
+          </div>
+          <div class="dashboard-metrics">
+            <div class="metric">
+              <span class="metric-label">Transactions</span>
+              <span id="metricCount" class="metric-value">0</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Average</span>
+              <span id="metricAvg" class="metric-value">₦0.00</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Highest</span>
+              <span id="metricHighest" class="metric-value">₦0.00</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="budget-row">
+            <label for="budgetLimit">Set Budget Limit:</label>
+            <input type="text" id="budgetLimit" placeholder="₦0.00" autocomplete="off">
+          </div>
+          <div id="budgetWarning" class="budget-warning hidden">⚠ You have exceeded your budget limit!</div>
+        </div>
+      </div>
+
+      <div class="page hidden" id="page-add">
+        <h1>Bugexp</h1>
+        <div class="card">
+          <div class="form-row">
+            <input type="text" id="expenseName" placeholder="Expense name" autocomplete="off">
+            <input type="text" id="expenseAmount" placeholder="Amount (₦)" autocomplete="off">
+            <select id="expenseCategory">
+              <option value="">Category</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Rent">Rent</option>
+              <option value="Data">Data</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Others">Others</option>
+            </select>
+            <button id="addBtn">+ Add Expense</button>
+          </div>
+          <p id="errorMsg" class="error"></p>
+        </div>
+      </div>
+
+      <div class="page hidden" id="page-expenses">
+        <h1>Bugexp</h1>
+        <div class="card">
+          <input type="text" id="searchInput" placeholder="Search expenses by name or category..." autocomplete="off">
+        </div>
+        <div id="expenseList"></div>
+      </div>
+
+      <div class="page hidden" id="page-summary">
+        <h1>Bugexp</h1>
+        <div class="card">
+          <h2>Category Summary</h2>
+          <div id="categorySummary" class="summary-grid"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="aboutModal" class="modal-overlay hidden">
+    <div class="modal">
+      <button id="closeModal" class="modal-close">✕</button>
+      <div class="modal-title">About Bugexp</div>
+      <p>Bugexp is a lightweight expense tracker built with vanilla JavaScript, HTML, and CSS.</p>
+      <p>Track your spending, set budgets, and stay on top of your finances — all in one place.</p>
+      <p class="modal-version">Version 1.0</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
